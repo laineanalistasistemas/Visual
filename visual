@@ -1,0 +1,52 @@
+// src/screens/CommunicationScreen.js
+import React, { useState } from 'react';
+import { View, ScrollView, StyleSheet, Button, Text } from 'react-native';
+import ImageCard from '../components/ImageCard';
+import PhraseBuilder from '../components/PhraseBuilder';
+
+const images = [
+  { id: 1, src: require('../assets/apple.png'), label: 'Apple' },
+  { id: 2, src: require('../assets/banana.png'), label: 'Banana' },
+  { id: 3, src: require('../assets/orange.png'), label: 'Orange' },
+  // Adicione mais imagens conforme necessário
+];
+
+const CommunicationScreen = () => {
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const handleImageSelect = (image) => {
+    setSelectedImages([...selectedImages, image]);
+  };
+
+  const handleClearPhrase = () => {
+    setSelectedImages([]);
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.imageContainer}>
+        {images.map((image) => (
+          <ImageCard key={image.id} image={image} onSelect={handleImageSelect} />
+        ))}
+      </ScrollView>
+      <PhraseBuilder selectedImages={selectedImages} />
+      <Button title="Clear Phrase" onPress={handleClearPhrase} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f8f8f8'
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBottom: 16
+  }
+});
+
+export default CommunicationScreen;
